@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "844175847833",
+    "project_id": "salutepfi",
+    "storage_bucket": "salutepfi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:844175847833:android:afd1ef2983eb57071e6308",
+        "android_client_info": {
+          "package_name": "com.example.salutepfi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTPqk4rALSIJWRscJtCJxhgBhseMlhvxY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
