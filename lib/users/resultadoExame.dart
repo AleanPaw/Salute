@@ -66,7 +66,7 @@ Widget _buildConsultasList(User user,) {
     stream: FirebaseFirestore.instance
         .collection('exames')
         .where('emailUsuario', isEqualTo: user.email)
-        .where('status', isEqualTo: "concluida")
+        .where('status', isEqualTo: "concluido")
         .snapshots(),
     builder: (context, snapshot) {
       if (!snapshot.hasData) {

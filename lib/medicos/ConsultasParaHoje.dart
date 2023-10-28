@@ -94,7 +94,8 @@ class ConsultasParahoje extends StatelessWidget {
               );
             }
 
-            var especialidadeDoMedico = userSnapshot.data!['especialidade'];
+            var especialidadeDoMedico = userSnapshot.data?['especialidade'] ?? 'Geral';
+
 
             var consultasFiltradas = consultas.where((consulta) {
               var especialidadeConsulta = consulta['tipoConsulta'];
