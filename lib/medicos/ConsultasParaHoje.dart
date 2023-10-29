@@ -18,7 +18,7 @@ class ConsultasParahoje extends StatelessWidget {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
 
-    var now = DateTime.now();
+    var now = DateTime.now().toLocal();
     var startOfDay = Timestamp.fromDate(DateTime(now.year, now.month, now.day, 0, 0, 0));
     var endOfDay = Timestamp.fromDate(DateTime(now.year, now.month, now.day, 23, 59, 59));
 
@@ -66,6 +66,13 @@ class ConsultasParahoje extends StatelessWidget {
   }
   late User? _user = FirebaseAuth.instance.currentUser;
   Widget _buildConsultasList(User user, Timestamp startOfDay, Timestamp endOfDay) {
+
+    DateTime converterParaFuso(Timestamp dataUtc) {
+      DateTime dataUtcConvertida = dataUtc.toDate();
+      var fusoHorarioBrasil = DateTime.now().timeZoneOffset;
+      return dataUtcConvertida.subtract(fusoHorarioBrasil);
+    }
+
     return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('consultas')
@@ -94,26 +101,31 @@ class ConsultasParahoje extends StatelessWidget {
               );
             }
 
-            var especialidadeDoMedico = userSnapshot.data?['especialidade'] ?? 'Geral';
+            var especialidadeDoMedico = userSnapshot.data?['especialidade'];
+            var cidadeDoMedico = userSnapshot.data?['cidade'];
 
 
             var consultasFiltradas = consultas.where((consulta) {
               var especialidadeConsulta = consulta['tipoConsulta'];
               var cidadeConsulta = consulta['cidade'];
-              return especialidadeConsulta == especialidadeDoMedico && cidadeConsulta == cidadeConsulta;
+              return especialidadeConsulta == especialidadeDoMedico && cidadeConsulta == cidadeDoMedico;
             }).toList();
 
             return ListView.builder(
               itemCount: consultasFiltradas.length,
               itemBuilder: (context, index) {
                 var consulta = consultasFiltradas[index];
+
+                // Timestamp data = consulta['dataConsulta'];
+                // DateTime dataConvertida = converterParaFuso(data);
                 var data = consulta['dataConsulta'].toDate();
-                var dataFormatada = formatarData(data);
                 var tipo = consulta['tipoConsulta'];
                 var nome = consulta['nomeUsuario'];
                 var documento = consulta.id;
                 var status = consulta['status'];
                 var historioco = consulta['historioco'];
+                var dataFormatada = DateFormat('dd/MM/yyyy').format(data);
+
 
                 return ListTile(
                   title: Text('Consulta: $tipo'),
@@ -127,7 +139,7 @@ class ConsultasParahoje extends StatelessWidget {
                                 MaterialPageRoute(
                                   builder: (context) => PacienteConsultando(
                                     tipoExame: tipo,
-                                    dataExame: data,
+                                    dataExame: dataFormatada,
                                     nomeUsuario: nome,
                                     id: user.uid,
                                     nomeDocumento: documento,
@@ -150,14 +162,10 @@ class ConsultasParahoje extends StatelessWidget {
     );
   }
 
-  String formatarData(DateTime data) {
-    var formatter = DateFormat('dd/MM/yyyy');
-    return formatter.format(data);
-  }
 }
 class PacienteConsultando extends StatefulWidget {
   final String tipoExame;
-  final DateTime dataExame;
+  final String dataExame;
   final String nomeUsuario;
   final String id;
   final String nomeDocumento;

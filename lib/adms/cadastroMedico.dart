@@ -74,7 +74,7 @@ class _CadastroPageState  extends State<CadastroMedico> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Text(
-                "Cadastrar médico:",
+                "Cadastrar médico e assistentes:",
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,

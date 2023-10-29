@@ -85,7 +85,7 @@ class _MarcarConsultaState extends State<MarcarConsulta> {
           'nomeUsuario': user.displayName,
           'emailUsuario': user.email,
           'tipoConsulta': selectedValue,
-          'dataConsulta': _dataSelecionada,
+          'dataConsulta': _dataSelecionada.toLocal(),
           'motivoConsulta': _motivoConsultaController.text,
           'comentario': "",
           'status': "pendente",

@@ -110,7 +110,7 @@ class _PerfilState extends State<AdmPag> {
                     MaterialPageRoute(builder: (context) => const CadastroMedico()),
                   );
                 },
-                label: const Text('Cadastrar novos médicos'),
+                label: const Text('Cadastrar novos médicos e assistentes'),
                 icon: const Icon( Icons.arrow_forward, ),
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.black, backgroundColor: const Color(0xff90E0EF), shape: RoundedRectangleBorder(
